@@ -14,18 +14,14 @@
  android:
   components:
     - tools
-    - tools
     - platform-tools
     - build-tools-$ANDROID_BUILD_TOOLS_VERSION
     - android-$ANDROID_API_LEVEL
     - android-$EMULATOR_API_LEVEL
-    - extra
     - add-on
     - extra-google-m2repository
     - extra-android-m2repository
 
-    # Google Play Services
-    - extra-google-google_play_services
     # Support library
     - extra-android-support
 
