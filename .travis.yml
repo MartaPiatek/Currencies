@@ -18,12 +18,8 @@
     - build-tools-$ANDROID_BUILD_TOOLS_VERSION
     - android-$ANDROID_API_LEVEL
     - android-$EMULATOR_API_LEVEL
-    - add-on
     - extra-google-m2repository
     - extra-android-m2repository
-
-    # Support library
-    - extra-android-support
 
     - addon-google_apis-google-$ANDROID_API_LEVEL
     - addon-google_apis-google-$EMULATOR_API_LEVEL
