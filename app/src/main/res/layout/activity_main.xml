@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="#000"
+              android:background="@color/black"
               android:orientation="vertical">
 
 <LinearLayout
@@ -18,7 +18,7 @@
         android:layout_weight="30"
         android:gravity="bottom"
         android:text="Waluta obca"
-        android:textColor="#ff22e9ff"
+        android:textColor="@color/turquoise"
         />
 
     <Spinner
@@ -39,7 +39,7 @@
        android:layout_weight="15"
        android:gravity="bottom"
        android:text="Wpisz kwotę w walucie obcej"
-       android:textColor="#666"
+       android:textColor="@color/grey_med"
        android:textSize="12sp"
        />
 </LinearLayout>
@@ -50,7 +50,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_weight="20"
-        android:background="#222" >
+        android:background="@color/grey_dark" >
 
     <EditText
         android:layout_width="match_parent"
@@ -59,11 +59,11 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:background="#111"
+        android:background="@color/grey_very_dark"
         android:digits="0123456789."
         android:gravity="center_vertical"
         android:inputType="numberDecimal"
-        android:textColor="#FFF"
+        android:textColor="@color/white"
         android:textSize="30sp">
         <requestFocus/>
         </EditText>
@@ -77,7 +77,7 @@
     android:layout_marginRight="10dp"
     android:layout_weight="10"
     android:text="Oblicz"
-    android:textColor="#AAA"
+    android:textColor="@color/grey_light"
     />
 
 
@@ -94,7 +94,7 @@
             android:layout_marginRight="10dp"
             android:gravity="bottom"
             android:layout_weight="30"
-            android:textColor="#ff22e9ff"
+            android:textColor="@color/turquoise"
             android:text="Waluta macierzysta"/>
 
         <Spinner
@@ -127,7 +127,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_weight="20"
-        android:background="#222">
+        android:background="@color/grey_dark">
 
         <TextView
             android:id="@+id/txt_converted"
@@ -136,7 +136,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_gravity="center_vertical"
-            android:background="#333"
+            android:background="@color/grey_med_dark"
             android:gravity="center_vertical"
             android:textSize="30sp"
             android:typeface="normal"/>
