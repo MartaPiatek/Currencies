@@ -1,6 +1,146 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context=".MainActivity">
-</RelativeLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+               android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#000"
+              android:orientation="vertical">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="20"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="30"
+        android:gravity="bottom"
+        android:text="Waluta obca"
+        android:textColor="#ff22e9ff"
+        />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/spn_for"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="55"
+        android:gravity="top" />
+
+
+   <TextView
+       android:layout_width="match_parent"
+       android:layout_height="0dp"
+       android:layout_marginLeft="10dp"
+       android:layout_marginRight="10dp"
+       android:layout_weight="15"
+       android:gravity="bottom"
+       android:text="Wpisz kwotę w walucie obcej"
+       android:textColor="#666"
+       android:textSize="12sp"
+       />
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="20"
+        android:background="#222" >
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/edt_amount"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#111"
+        android:digits="0123456789."
+        android:gravity="center_vertical"
+        android:inputType="numberDecimal"
+        android:textColor="#FFF"
+        android:textSize="30sp">
+        <requestFocus/>
+        </EditText>
+        </LinearLayout>
+
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:id="@+id/btn_calc"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_weight="10"
+    android:text="Oblicz"
+    android:textColor="#AAA"
+    />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="20"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="bottom"
+            android:layout_weight="30"
+            android:textColor="#ff22e9ff"
+            android:text="Waluta macierzysta"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/spn_hom"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="55"
+            android:gravity="top" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="15"
+            android:gravity="bottom"
+            android:text="Kwota w walucie macierzystej"
+            android:textColor="#666"
+            android:textSize="12sp"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="20"
+        android:background="#222">
+
+        <TextView
+            android:id="@+id/txt_converted"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="center_vertical"
+            android:background="#333"
+            android:gravity="center_vertical"
+            android:textSize="30sp"
+            android:typeface="normal"/>
+
+    </LinearLayout>
+
+</LinearLayout>
