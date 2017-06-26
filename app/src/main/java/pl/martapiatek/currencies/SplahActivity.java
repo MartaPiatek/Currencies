@@ -1,6 +1,7 @@
 package pl.martapiatek.currencies;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.constraint.solver.ArrayLinkedVariables;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ public class SplahActivity extends Activity {
     // adres URL kodów walu wykorzystywanych w aplikacji
 
     public static final String URL_CODES = "http://openexchangerates.org/api/currencies.json";
+    public static final String KEY_ARRAYLIST = "key_arraylist";
 
     // obiekt ArrayList z walutami, które zostaną pobrane i przekazane do MainActivity
 
@@ -58,6 +60,11 @@ public class SplahActivity extends Activity {
                     key = (String)iterator.next();
                     mCurrencies.add(key + " | " + jsonObject.getString(key));
                 }
+
+                Intent mainIntent = new Intent(SplahActivity.this, MainActivity.class);
+                mainIntent.putExtra(KEY_ARRAYLIST, mCurrencies);
+                startActivity(mainIntent);
+
                 finish();
             }catch (JSONException e){
                 Toast.makeText(SplahActivity.this, "Wyjątek w danych JSON: " + e.getMessage(), Toast.LENGTH_LONG).show();
