@@ -11,15 +11,8 @@
     android:orientation="vertical" >
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_weight="30"
-        android:gravity="bottom"
         android:text="Waluta obca"
-        android:textColor="@color/turquoise"
-        />
+        style="@style/label.curr"/>
 
     <Spinner
         android:layout_width="match_parent"
@@ -32,25 +25,12 @@
 
 
    <TextView
-       android:layout_width="match_parent"
-       android:layout_height="0dp"
-       android:layout_marginLeft="10dp"
-       android:layout_marginRight="10dp"
-       android:layout_weight="15"
-       android:gravity="bottom"
        android:text="Wpisz kwotę w walucie obcej"
-       android:textColor="@color/grey_med"
-       android:textSize="12sp"
-       />
+       style="@style/label.desc"/>
 </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_weight="20"
-        android:background="@color/grey_dark" >
+        style="@style/layout_back">
 
     <EditText
         android:layout_width="match_parent"
@@ -88,14 +68,8 @@
         android:orientation="vertical" >
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:gravity="bottom"
-            android:layout_weight="30"
-            android:textColor="@color/turquoise"
-            android:text="Waluta macierzysta"/>
+            android:text="Waluta macierzysta"
+            style="@style/label.curr"/>
 
         <Spinner
             android:layout_width="match_parent"
@@ -108,26 +82,16 @@
 
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_weight="15"
-            android:gravity="bottom"
             android:text="Kwota w walucie macierzystej"
             android:textColor="#666"
             android:textSize="12sp"
-            />
+            style="@style/label"/>
     </LinearLayout>
 
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_weight="20"
-        android:background="@color/grey_dark">
+        style="@style/layout_back">
 
         <TextView
             android:id="@+id/txt_converted"
