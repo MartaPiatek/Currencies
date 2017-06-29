@@ -1,68 +1,62 @@
 package pl.martapiatek.currencies;
 
+import android.os.StrictMode;
 import android.util.Log;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class JSONParser {
 
-    static InputStream sInputStream = null;
+    public static final String URL_CODES = "http://openexchangerates.org/api/currencies.json";
     static JSONObject sReturnJsonObject = null;
     static String sRawJsonString = "";
 
-    public JSONParser() {}
-
-    public JSONObject getJSONFromUrl(String url) {
-
-        // próba pobrania odpowiedzi z serwera
+    JSONObject getJSONFromUrl(String text) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         try {
-            DefaultHttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost(url);
 
-            HttpResponse httpResponse = httpClient.execute(httpPost);
-            HttpEntity httpEntity = httpResponse.getEntity();
-            sInputStream = httpEntity.getContent();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
+            URL url = new URL(URL_CODES);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestProperty("Accept", "application/json");
+            try {
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                StringBuilder stringBuilder = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(line).append("\n");
+                }
+                bufferedReader.close();
+
+                sRawJsonString = stringBuilder.toString();
+            } catch (Exception e) {
+                Log.e("Błąd odczytu z Buffer: " + e.toString(),
+                        this.getClass().getSimpleName());
+            }
+
+            try {
+                sReturnJsonObject = new JSONObject(sRawJsonString);
+            } catch (JSONException e) {
+                Log.e("Parser", "Błąd w trakcie parsowania danych " + e.toString());
+            }
+
+
+
+
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        // przekazanie strumienia do obiektu StringBuilder
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    sInputStream, "iso-8859-1"), 8);
-            StringBuilder stringBuilder = new StringBuilder();
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                stringBuilder.append(line + "\n");
-            }
-            sInputStream.close();
-            sRawJsonString = stringBuilder.toString();
-        } catch (Exception e) {
-            Log.e("Błąd odczytu z Buffer: " + e.toString(),
-                    this.getClass().getSimpleName());
-        }
-
-        try {
-            sReturnJsonObject = new JSONObject(sRawJsonString);
-        } catch (JSONException e) {
-            Log.e("Parser", "Błąd w trakcie parsowania danych " + e.toString());
-        }
-
         // zwrócenie obiektu JSON
         return sReturnJsonObject;
     }
+
 }

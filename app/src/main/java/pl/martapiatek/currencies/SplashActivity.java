@@ -3,8 +3,6 @@ package pl.martapiatek.currencies;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.constraint.solver.ArrayLinkedVariables;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.Toast;
@@ -15,7 +13,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class SplahActivity extends Activity {
+public class SplashActivity extends Activity {
 
     // adres URL kodów walu wykorzystywanych w aplikacji
 
@@ -61,13 +59,13 @@ public class SplahActivity extends Activity {
                     mCurrencies.add(key + " | " + jsonObject.getString(key));
                 }
 
-                Intent mainIntent = new Intent(SplahActivity.this, MainActivity.class);
+                Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
                 mainIntent.putExtra(KEY_ARRAYLIST, mCurrencies);
                 startActivity(mainIntent);
 
                 finish();
             }catch (JSONException e){
-                Toast.makeText(SplahActivity.this, "Wyjątek w danych JSON: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(SplashActivity.this, "Wyjątek w danych JSON: " + e.getMessage(), Toast.LENGTH_LONG).show();
             e.printStackTrace();
                 finish();
             }
