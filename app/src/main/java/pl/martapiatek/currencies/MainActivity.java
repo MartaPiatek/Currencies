@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class MainActivity extends AppCompatActivity {
 
     //definicja składowych odpowiadających widokom w układzie graficznym
@@ -19,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mConvertedTextView;
     private EditText mAmountEditText;
     private Spinner mForSpinner, mHomSpinner;
-
+    private String[] mCurrencies;
 
 
 
@@ -27,6 +30,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //rozpakowanie ArrayList z paczki i konwersja na tablicę
+        ArrayList<String> arrayList = ((ArrayList<String>) getIntent().getSerializableExtra(SplashActivity.KEY_ARRAYLIST));
+        Collections.sort(arrayList);
+        mCurrencies = arrayList.toArray(new String[arrayList.size()]);
 
         //przypisanie referencji do widoków
         mConvertedTextView = (TextView) findViewById(R.id.txt_converted);
