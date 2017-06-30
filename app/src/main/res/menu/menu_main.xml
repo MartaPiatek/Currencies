@@ -2,9 +2,23 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="pl.martapiatek.currencies.MainActivity">
+
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/mnu_codes"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="znajdź aktywne kody"
         app:showAsAction="never"/>
-</menu>
+
+    <item
+        android:id="@+id/mnu_invert"
+        android:orderInCategory="200"
+        android:title="odwróć kody"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/mnu_exit"
+        android:orderInCategory="300"
+        android:title="wyjdź"
+        app:showAsAction="never"/>
+
+    </menu>
