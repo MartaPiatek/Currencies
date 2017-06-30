@@ -1,5 +1,10 @@
 package pl.martapiatek.currencies;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
@@ -45,6 +50,35 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public boolean isOnline(){
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        if(networkInfo != null && networkInfo.isConnectedOrConnecting()){
+            return true;
+        }
+        return false;
+    }
+
+    private void launchBrowser(String strUri){
+        if(isOnline()){
+            Uri uri = Uri.parse(strUri);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        }
+    }
+
+    private void invertCurrencies(){
+
+        int nFor = mForSpinner.getSelectedItemPosition();
+        int nHom = mHomSpinner.getSelectedItemPosition();
+
+        mForSpinner.setSelection(nHom);
+        mHomSpinner.setSelection(nFor);
+
+        mConvertedTextView.setText("");
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -58,10 +92,10 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch(id) {
             case R.id.mnu_invert:
-                //TODO zdefiniować zachowanie
+                invertCurrencies();
                 break;
             case R.id.mnu_codes:
-                //TODO zdefiniować zachowanie
+                launchBrowser(SplashActivity.URL_CODES);
                 break;
             case R.id.mnu_exit:
                 finish();
