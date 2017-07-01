@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -46,7 +47,26 @@ public class MainActivity extends AppCompatActivity {
         mAmountEditText = (EditText) findViewById(R.id.edt_amount);
         mCalcButton = (Button) findViewById(R.id.btn_calc);
         mForSpinner = (Spinner) findViewById(R.id.spn_for);
-        mForSpinner = (Spinner) findViewById(R.id.spn_hom);
+        mHomSpinner = (Spinner) findViewById(R.id.spn_hom);
+
+        //kontroler
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                //kontekst
+                this,
+                //widok
+                R.layout.spinner_closed,
+                //model
+                mCurrencies
+        );
+
+        //widok
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        //przypisanie adapterów
+
+        mHomSpinner.setAdapter(arrayAdapter);
+        mForSpinner.setAdapter(arrayAdapter);
+
 
     }
 
