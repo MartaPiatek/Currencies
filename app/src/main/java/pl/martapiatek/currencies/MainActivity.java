@@ -105,11 +105,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private int findPositionGivenCode(String code, String[] currencies){
 
         for(int i=0; i < currencies.length; i++){
-            if((currencies[i]).substring(0,3).equalsIgnoreCase(code)){
+            if(extractCodeFromCurrency(currencies[i]).equalsIgnoreCase(code)){
                 return i;
             }
         }
         return 0;
+    }
+
+    private String extractCodeFromCurrency(String currency) {
+        return (currency).substring(0,3);
     }
 
     @Override
