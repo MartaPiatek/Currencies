@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +22,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     //definicja składowych odpowiadających widokom w układzie graficznym
     private Button mCalcButton;
@@ -67,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         mHomSpinner.setAdapter(arrayAdapter);
         mForSpinner.setAdapter(arrayAdapter);
 
+        mHomSpinner.setOnItemSelectedListener(this);
+        mForSpinner.setOnItemSelectedListener(this);
 
     }
 
@@ -122,5 +125,28 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
             return true;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        switch (parent.getId()){
+
+            case R.id.spn_for:
+                //TODO funkcjonalność do zdefiniowania
+                break;
+            case R.id.spn_hom:
+                //TODO funkcjonalność do zdefiniowania
+                break;
+            default:
+                break;
+
+        }
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
