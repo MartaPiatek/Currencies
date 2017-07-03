@@ -30,6 +30,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private EditText mAmountEditText;
     private Spinner mForSpinner, mHomSpinner;
     private String[] mCurrencies;
+    private static final String FOR = "FOR_CURRENCY";
+    private static final String HOM = "HOM_CURRENCY";
+
 
 
 
@@ -71,6 +74,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mHomSpinner.setOnItemSelectedListener(this);
         mForSpinner.setOnItemSelectedListener(this);
 
+        // ustawienie ustawień współdzielonych lub ich pobranie
+
+        if(savedInstanceState == null && (PrefsMgr.getString(this, FOR) == null && PrefsMgr.getString(this, HOM) == null) ){
+            mForSpinner.setSelection(findPositionGivenCode("EUR", mCurrencies));
+            mHomSpinner.setSelection(findPositionGivenCode("PLN", mCurrencies));
+
+            PrefsMgr.setString(this, FOR, "EUR");
+            PrefsMgr.setString(this, HOM, "PLN");
+        }else {
+            mForSpinner.setSelection(findPositionGivenCode(PrefsMgr.getString(this, FOR), mCurrencies));
+            mHomSpinner.setSelection(findPositionGivenCode(PrefsMgr.getString(this, HOM), mCurrencies));
+        }
+
     }
 
     public boolean isOnline(){
@@ -100,6 +116,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         mConvertedTextView.setText("");
 
+        PrefsMgr.setString(this, FOR, extractCodeFromCurrency((String) mForSpinner.getSelectedItem()));
+        PrefsMgr.setString(this, HOM, extractCodeFromCurrency((String) mHomSpinner.getSelectedItem()));
     }
 
     private int findPositionGivenCode(String code, String[] currencies){
@@ -147,15 +165,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         switch (parent.getId()){
 
             case R.id.spn_for:
-                //TODO funkcjonalność do zdefiniowania
+                PrefsMgr.setString(this, FOR, extractCodeFromCurrency((String) mForSpinner.getSelectedItem()));
                 break;
             case R.id.spn_hom:
-                //TODO funkcjonalność do zdefiniowania
+               PrefsMgr.setString(this, HOM, extractCodeFromCurrency((String) mHomSpinner.getSelectedItem()));
                 break;
             default:
                 break;
 
         }
+
+        mConvertedTextView.setText("");
 
     }
 
