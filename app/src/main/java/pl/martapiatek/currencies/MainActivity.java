@@ -2,6 +2,7 @@ package pl.martapiatek.currencies;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -19,8 +20,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Properties;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -30,8 +35,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private EditText mAmountEditText;
     private Spinner mForSpinner, mHomSpinner;
     private String[] mCurrencies;
+
     private static final String FOR = "FOR_CURRENCY";
     private static final String HOM = "HOM_CURRENCY";
+
+    //klucz API
+    private String mKey;
+
+    //używane do pobierania obiektu 'rates' w formacie JSON ze strony openexchangerates.org
+    public static final String RATES = "rates";
+    public static final String URL_BASE = "http://openexchangerates.org/api/latest.json?api_id=";
+
+    //używane do właściwego sformatowania pobranych danych
+    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#,##0.00000");
+
 
 
 
@@ -95,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
+        mKey = getKey("open_key");
     }
 
     public boolean isOnline(){
@@ -147,6 +165,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    private String getKey(String keyName){
+
+        AssetManager assetManager = this.getResources().getAssets();
+        Properties properties = new Properties();
+
+        try{
+            InputStream inputStream = assetManager.open("keys.properties");
+            properties.load(inputStream);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        return properties.getProperty(keyName);
+
     }
 
     @Override
