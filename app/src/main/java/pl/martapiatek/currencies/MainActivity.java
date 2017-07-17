@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     //używane do pobierania obiektu 'rates' w formacie JSON ze strony openexchangerates.org
     public static final String RATES = "rates";
-    public static final String URL_BASE = "http://openexchangerates.org/api/latest.json?api_id=";
+    public static final String URL_BASE = "latest.json?app_id=";
 
     //używane do właściwego sformatowania pobranych danych
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#,##0.00000");
@@ -101,27 +101,48 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         // ustawienie ustawień współdzielonych lub ich pobranie
 
-        if(savedInstanceState == null && (PrefsMgr.getString(this, FOR) == null && PrefsMgr.getString(this, HOM) == null) ){
+        if (savedInstanceState == null
+                && (PrefsMgr.getString(this, FOR) == null &&
+                PrefsMgr.getString(this, HOM) == null)) {
+
             mForSpinner.setSelection(findPositionGivenCode("EUR", mCurrencies));
             mHomSpinner.setSelection(findPositionGivenCode("PLN", mCurrencies));
 
-            PrefsMgr.setString(this, FOR, "EUR");
-            PrefsMgr.setString(this, HOM, "PLN");
-        }else {
-            mForSpinner.setSelection(findPositionGivenCode(PrefsMgr.getString(this, FOR), mCurrencies));
-            mHomSpinner.setSelection(findPositionGivenCode(PrefsMgr.getString(this, HOM), mCurrencies));
+            PrefsMgr.setString(this, FOR,"EUR");
+            PrefsMgr.setString(this, HOM,"PLN");
+
+        } else {
+
+            mForSpinner.setSelection(findPositionGivenCode(PrefsMgr.getString(this,
+                    FOR), mCurrencies));
+            mHomSpinner.setSelection(findPositionGivenCode(PrefsMgr.getString(this,
+                    HOM), mCurrencies));
         }
 
-
-        mCalcButton.setOnClickListener( new View.OnClickListener(){
+        mCalcButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new CurrencyConverterTask().execute(URL_BASE + mKey);
+                if (isNumeric(String.valueOf(mAmountEditText.getText()))){
+                    new CurrencyConverterTask().execute("");
+                } else {
+                    Toast.makeText(MainActivity.this, "To nie wartość liczbowa, spróbuj ponownie.", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
         mKey = getKey("open_key");
     }
+
+    public static boolean isNumeric(String str) {
+        try{
+            double dub = Double.parseDouble(str);
+        }
+        catch(NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+
 
     public boolean isOnline(){
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -239,50 +260,53 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         private ProgressDialog progressDialog;
         @Override
-        protected void onPreExecute(){
-           progressDialog = new ProgressDialog(MainActivity.this);
-            progressDialog.setTitle("Obliczanie wyniku");
+        protected void onPreExecute() {
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setTitle("Obliczanie wyniku...");
             progressDialog.setMessage("Proszę czekać...");
             progressDialog.setCancelable(true);
-            progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE,"Anuluj", new DialogInterface.OnClickListener(){
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    CurrencyConverterTask.this.cancel(true);
-                    progressDialog.dismiss();
-                }
-            });
+            progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE,
+                    "Anuluj", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            CurrencyConverterTask.this.cancel(true);
+                            progressDialog.dismiss();
+                        }
+                    });
             progressDialog.show();
-
         }
-
         @Override
         protected JSONObject doInBackground(String... params) {
-            return new JSONParser().getJSONFromUrl(params[0]);
+            return new JSONParser().getJSONFromUrlRates("");
         }
-
         @Override
-        protected void onPostExecute(JSONObject jsonObject){
+        protected void onPostExecute(JSONObject jsonObject) {
             double dCalculated = 0.0;
-            String strForCode = extractCodeFromCurrency(mCurrencies[mForSpinner.getSelectedItemPosition()]);
-            String strHomCode = extractCodeFromCurrency(mCurrencies[mHomSpinner.getSelectedItemPosition()]);
-
+            String strForCode =
+                    extractCodeFromCurrency(mCurrencies[mForSpinner.getSelectedItemPosition()]);
+            String strHomCode = extractCodeFromCurrency(mCurrencies[mHomSpinner.
+                    getSelectedItemPosition()]);
             String strAmount = mAmountEditText.getText().toString();
-
-            try{
-                if(jsonObject == null){
+            try {
+                if (jsonObject == null){
                     throw new JSONException("brak danych");
                 }
                 JSONObject jsonRates = jsonObject.getJSONObject(RATES);
-                if(strHomCode.equalsIgnoreCase("USD")){
-                    dCalculated = Double.parseDouble(strAmount)/jsonRates.getDouble(strForCode);
-                }else if(strForCode.equalsIgnoreCase("USD")){
-                    dCalculated = Double.parseDouble(strAmount) * jsonRates.getDouble(strHomCode);
+                if (strHomCode.equalsIgnoreCase("USD")){
+                    dCalculated = Double.parseDouble(strAmount) / jsonRates.getDouble(strForCode);
+                } else if (strForCode.equalsIgnoreCase("USD")) {
+                    dCalculated = Double.parseDouble(strAmount) * jsonRates.getDouble(strHomCode) ;
                 }
                 else {
-                    dCalculated = Double.parseDouble(strAmount) * jsonRates.getDouble(strHomCode) / jsonRates.getDouble(strForCode);
+                    dCalculated = Double.parseDouble(strAmount) * jsonRates.getDouble(strHomCode)
+                            / jsonRates.getDouble(strForCode) ;
                 }
-            }catch (JSONException e){
-                Toast.makeText(MainActivity.this, "Wyjątek w danych JSON: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            } catch (JSONException e) {
+                Toast.makeText(
+                        MainActivity.this,
+                        "Wyjątek w danych JSON: " + e.getMessage(),
+                        Toast.LENGTH_LONG
+                ).show();
                 mConvertedTextView.setText("");
                 e.printStackTrace();
             }

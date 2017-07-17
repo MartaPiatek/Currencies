@@ -31,7 +31,7 @@ public class SplashActivity extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_splah);
 
-        new FetchCodesTask().execute(URL_CODES);
+        new FetchCodesTask().execute("currencies.json");
     }
 
 
