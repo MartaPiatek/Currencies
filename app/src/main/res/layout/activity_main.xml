@@ -57,7 +57,9 @@
     android:layout_marginRight="10dp"
     android:layout_weight="10"
     android:text="Oblicz"
-    android:textColor="@color/grey_light"
+
+    android:textColor="@color/white"
+    android:background="@drawable/button_selector"
     />
 
 
@@ -95,6 +97,7 @@
 
         <TextView
             android:id="@+id/txt_converted"
+            android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="5dp"
