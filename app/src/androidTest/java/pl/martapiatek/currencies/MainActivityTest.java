@@ -1,11 +1,15 @@
 package pl.martapiatek.currencies;
 
 
+import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 /**
  * Created by Marta on 18.07.2017.
@@ -32,6 +36,15 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     @Override
     public void setUp() throws Exception {
         super.setUp();
+
+        //przekaż zmyślone waluty
+        ArrayList<String> bogusCurrencies = new ArrayList<>();
+        bogusCurrencies.add("USD|United States Dollar");
+        bogusCurrencies.add("EUR|Euro");
+
+        Intent intent = new Intent();
+        intent.putExtra(SplashActivity.KEY_ARRAYLIST,bogusCurrencies);
+        setActivityIntent(intent);
 
         //pobierz testowana aktywnosc
         mActivity = getActivity();

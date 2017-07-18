@@ -59,6 +59,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#,##0.00000");
 
 
+    // interfejs potrzebny do testowania przy uzyciu watkow
+    private CurrencyTaskCallback mCurrencyTaskCallback;
+
+    public static interface CurrencyTaskCallback {
+        void executionDone();
+    }
+
+    public void setCurrencyTaskCallback(CurrencyTaskCallback currencyTaskCallback){
+        this.mCurrencyTaskCallback = currencyTaskCallback;
+    }
 
 
 
@@ -319,6 +329,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
             mConvertedTextView.setText(DECIMAL_FORMAT.format(dCalculated) + " " + strHomCode);
             progressDialog.dismiss();
+
+            // w celach testowych
+
+            if(mCurrencyTaskCallback != null){
+                mCurrencyTaskCallback.executionDone();
+            }
         }
 
 
