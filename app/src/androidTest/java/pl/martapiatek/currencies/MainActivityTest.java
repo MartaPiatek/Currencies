@@ -79,7 +79,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
             @Override
             public void executionDone() {
                 latch.countDown();
-                assertEquals(convertToDouble(mConvertedTextView.getText().toString().substring(0, 5)),conertToDouble( str));
+                assertEquals(convertToDouble(mConvertedTextView.getText().toString().substring(0, 5)),convertToDouble( str));
             }
         });
 
